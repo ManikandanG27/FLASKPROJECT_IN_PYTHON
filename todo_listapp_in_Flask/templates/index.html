@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Todo List</title> <!-- Title of the HTML page -->
+  </head>
+  <body>
+    <h1>Todo List</h1> <!-- Heading for the Todo List -->
+    <ul>
+      {% for todo in todos %} <!-- Loop through each todo in the list -->
+        <li>
+          <input type="checkbox" name="done" {% if todo['done'] %}checked{% endif %} onchange="this.form.submit()"> <!-- Checkbox to mark todo as done -->
+          <span {% if todo['done'] %}style="text-decoration: line-through"{% endif %}>{{ todo['task'] }}</span> <!-- Display todo task with optional strikethrough if done -->
+          <a href="{{ url_for('edit', index=loop.index0) }}">edit</a> <!-- Link to edit todo -->
+          <a href="{{ url_for('delete', index=loop.index0) }}">delete</a> <!-- Link to delete todo -->
+        </li>
+      {% endfor %}
+    </ul>
+    <form action="{{ url_for('add') }}" method="post"> <!-- Form to add new todo -->
+      <input type="text" name="todo"> <!-- Input field for new todo -->
+      <button type="submit">Add</button> <!-- Button to submit new todo -->
+    </form>
+  </body>
+</html>
